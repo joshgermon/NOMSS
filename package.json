@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsc && node dist/",
+    "app": "npx tsc && node dist/",
     "test": "npx jest tests/nomss.test.ts"
   },
   "type": "module",
