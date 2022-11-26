@@ -21,8 +21,9 @@ describe('Test Order Fulfilment', () => {
 		const nomss = new OrderManagementSystem();
 		expect(nomss.processOrders([1122, 1125])).toEqual([1125]);
 	});
-	test('Process invalid order ids should return empty array', () => {
+	test('Process invalid order ids should return array of invalid orders', () => {
 		const nomss = new OrderManagementSystem();
-		expect(nomss.processOrders([2221, 2222])).toEqual([]);
+		expect(nomss.processOrders([2221, 2222])).toEqual([2221, 2222]);
 	});
 });
+

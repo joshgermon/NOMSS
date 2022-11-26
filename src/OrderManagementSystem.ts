@@ -47,7 +47,7 @@ class OrderManagementSystem {
 		const matchingOrders = this.findOrders(orderIds);
 		if (matchingOrders.length <= 0) {
 			console.log('No Matching Orders Found.');
-			return [];
+			return orderIds;
 		}
 		// Iterate over each matching order & process their items according to Inventory stock levels
 		const unfulfillableOrders: number[] = [];
