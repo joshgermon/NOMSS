@@ -12,14 +12,14 @@ enum OrderStatus {
 	Unfulfillable = 'Unfulfillable'
 }
 
-interface Order {
+export interface Order {
 	orderId: number;
 	status: OrderStatus;
 	dateCreated: string;
 	items: OrderItem[];
 }
 
-interface OrderItem {
+export interface OrderItem {
 	orderId: number;
 	productId: number;
 	quantity: number;
@@ -52,7 +52,7 @@ class OrderManagementSystem {
 		// Iterate over each matching order & process their items according to Inventory stock levels
 		const unfulfillableOrders: number[] = [];
 		matchingOrders.forEach((order) => {
-			const itemsProcessed = this.processOrderItems(order.items);
+			const itemsProcessed = this.inventory.sellProducts(order.items);
 			if (itemsProcessed) {
 				order.status = OrderStatus.Fulfilled;
 				console.log(
@@ -75,19 +75,6 @@ class OrderManagementSystem {
 		}
 		// Return orders that were unable to be fulfilled due to stock levels
 		return unfulfillableOrders;
-	}
-
-	processOrderItems(items: OrderItem[]): boolean {
-		for (const item of items) {
-			const sellProduct = this.inventory.sellProduct(
-				item.productId,
-				item.quantity
-			);
-			if (sellProduct === 'Not Enough Stock') {
-				return false;
-			}
-		}
-		return true;
 	}
 }
 

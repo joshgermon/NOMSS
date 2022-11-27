@@ -1,3 +1,5 @@
+import { OrderItem } from './OrderManagementSystem';
+
 export interface Product {
 	productId: number;
 	description: string;
@@ -18,18 +20,34 @@ export class Inventory {
 		return this.products.find((product) => product.productId === productId);
 	}
 
-	sellProduct(productId: number, quantity: number) {
+	canItemBeFulfilled({ productId, quantity }: OrderItem) {
 		const product = this.getProduct(productId);
 		if (!product) {
-			return 'Product Not Found';
+			console.log('Product Not Found.');
+			return false;
 		}
 		if (product.quantityOnHand - quantity < 0) {
 			this.reorderProduct(product.productId);
-			return 'Not Enough Stock';
+			console.log('Not Enough Stock');
+			return false;
 		}
-		product.quantityOnHand -= quantity;
-		if (product.quantityOnHand <= product.reorderThreshold) {
-			this.reorderProduct(product.productId);
+		return true;
+	}
+
+	// Returns true for all orders fulfillable & false for unfulfillable order(s)
+	sellProducts(orderItems: OrderItem[]) {
+		const orderIsFulfillable = orderItems.every((item) =>
+			this.canItemBeFulfilled(item)
+		);
+		if (!orderIsFulfillable) return false;
+		for (const item of orderItems) {
+			const product = this.getProduct(item.productId);
+			if (!product) return false;
+			// Sell product & decrease stock levels (reorder if threshold met)
+			product.quantityOnHand -= item.quantity;
+			if (product.quantityOnHand <= product.reorderThreshold) {
+				this.reorderProduct(product.productId);
+			}
 		}
 		return true;
 	}
