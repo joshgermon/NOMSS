@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "app": "npx tsc && node dist/",
-    "test": "npx jest tests/nomss.test.ts"
+    "test": "npx jest tests/"
   },
   "type": "module",
   "author": "",
