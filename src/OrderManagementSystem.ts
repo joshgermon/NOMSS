@@ -52,19 +52,21 @@ class OrderManagementSystem {
 		// Iterate over each matching order & process their items according to Inventory stock levels
 		const unfulfillableOrders: number[] = [];
 		matchingOrders.forEach((order) => {
+			console.log(`🔃  Commenced Processing of Order # ${order.orderId}`);
 			const itemsProcessed = this.inventory.sellProducts(order.items);
 			if (itemsProcessed) {
 				order.status = OrderStatus.Fulfilled;
 				console.log(
-					`Order #${order.orderId} has been successfully fulfilled.`
+					`✅  - Order #${order.orderId} has been successfully fulfilled.`
 				);
 			} else {
 				order.status = OrderStatus.Unfulfillable;
 				console.log(
-					`Order #${order.orderId} cannot be fulfilled due to stock levels. Order status set to "Unfulfilled".`
+					`❌  - Order #${order.orderId} cannot be fulfilled due to stock levels. Order status set to "Unfulfilled".`
 				);
 				unfulfillableOrders.push(order.orderId);
 			}
+			console.log('*****************************************');
 		});
 		if (unfulfillableOrders.length <= 0) {
 			console.log('✅  - All Orders were processed successfully.');

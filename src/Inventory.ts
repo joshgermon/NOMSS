@@ -28,7 +28,7 @@ export class Inventory {
 		}
 		if (product.quantityOnHand - quantity < 0) {
 			this.reorderProduct(product.productId);
-			console.log('Not Enough Stock');
+			console.log(`Not Enough Stock to fulfill ${quantity} of Product #${productId}.`);
 			return false;
 		}
 		return true;
