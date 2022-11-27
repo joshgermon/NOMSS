@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Inventory, Product } from './Inventory.js';
 
-type OrdersAndInventory = {
+export type OrdersAndInventory = {
 	products: Product[];
 	orders: Order[];
 };
