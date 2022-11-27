@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "app": "npx tsc && node dist/",
-    "test": "npx jest tests/"
+    "test": "npx jest tests/OrderManagementSystem.test.ts"
   },
   "type": "module",
   "author": "",
